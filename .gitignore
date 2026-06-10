@@ -1,0 +1,18 @@
+node_modules/
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional)
+.vscode/
+
+# Build folders (if you use them later)
+dist/
+build/
