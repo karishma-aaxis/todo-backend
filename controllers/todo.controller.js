@@ -67,7 +67,7 @@ export const getTodo = asyncHandler(async (req, res) => {
 });
 
 // Get Todo by ID
-export const getToodoByID = asyncHandler(async (req, res) => {
+export const getTodoByID = asyncHandler(async (req, res) => {
   const { id } = req.params; // take id from req.param
   //Valiadtio id based on mongoose
   if (!mongoose.Types.ObjectId.isValid(id)) {

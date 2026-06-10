@@ -107,11 +107,11 @@ export const changeUserRole = asyncHandler(async (req, res) => {
     id,
     { role },
     { new: true }, //it will give new update data
-  ).select(":password");
+  ).select("-password");
 
   //if user not found
   if (!userupdate) {
-    return res.status(404).josn({
+    return res.status(404).json({
       success: false,
       message: "User not found",
     });
@@ -129,6 +129,14 @@ export const blockUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { isBlocked } = req.body;
 
+  // Validation
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid User ID",
+    });
+  }
+
   // block the user
   const user = await User.findByIdAndUpdate(
     id,
@@ -137,7 +145,7 @@ export const blockUser = asyncHandler(async (req, res) => {
   ).select("-password");
 
   // if user found
-  if (!blockUser) {
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: "User not found",
@@ -148,7 +156,7 @@ export const blockUser = asyncHandler(async (req, res) => {
   return res.status(200).json({
     success: true,
     message: `User ${isBlocked ? "blocked" : "unblocked"} sucessfully`,
-    data: blockUser,
+    data: user,
   });
 });
 

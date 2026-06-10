@@ -190,6 +190,14 @@ export const refresHToken = asyncHandler(async (req, res) => {
   // find user
   const userToken = await User.findById(refreshTokenValue.id);
 
+  //User is blocked -->not not check
+  if (userToken.isBlocked) {
+    return res.status(403).json({
+      success: false,
+      message: "Account blocked by admin",
+    });
+  }
+
   // comprefer tefersh token  //user refersh-token and db refersh token
   if (!userToken || userToken.refreshToken !== refreshToken) {
     return res.status(401).json({
